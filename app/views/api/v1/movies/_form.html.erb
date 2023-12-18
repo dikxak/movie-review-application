@@ -1,0 +1,49 @@
+<%= form_with model: movie, url: url, method: method, local: true, html: { multipart: true }, data: { turbo: false } do |form| %>
+  <%= render "shared/form_errors", form: form %>
+
+  <div class="mb-3">
+    <%= form.label I18n.t("view.movies.title"), class: "mb-2" %>
+    <%= form.text_field :title, class: "form-control", placeholder: "Dark Knight" %>
+  </div>
+
+  <div class="mb-3">
+    <%= form.label I18n.t("view.movies.genres"), class: "mb-2" %>
+    <%= form.text_field :genres, class: "form-control", placeholder: "Action, Adventure" %>
+  </div>
+
+  <div class="mb-3">
+    <%= form.label I18n.t("view.movies.director"), class: "mb-2" %>
+    <%= form.text_field :director, class: "form-control", placeholder: "Christopher Nolan" %>
+  </div>
+
+   <div class="mb-3">
+    <%= form.label I18n.t("view.movies.description"), class: "mb-2" %>
+    <%= form.text_area :description, class: "form-control", placeholder: "Batman has a new foe, the Joker, who is an accomplished criminal hell-bent on decimating Gotham City..." %>
+  </div>
+
+  <div class="mb-3">
+    <%= form.label I18n.t("view.movies.duration"), class: "mb-2" %>
+    <%= form.number_field :duration, class: "form-control", placeholder: "152" %>
+  </div>
+
+  <div class="mb-3">
+    <%= form.label I18n.t("view.movies.release_date"), class: "mb-2" %>
+    <%= form.text_field :release_date, class: "form-control", placeholder: "2008-07-18" %>
+  </div>
+
+  <div class="mb-3">
+    <%= form.label :cover_image, class: "mb-2 d-block" %>
+    <%= form.file_field :cover_image %>
+  </div>
+
+  <div class="mb-4">
+    <%= form.label :poster_image, class: "mb-2 d-block" %>
+    <%= form.file_field :poster_image %>
+  </div>
+
+  <% if form_action == 'edit' %>
+      <%= form.button I18n.t("view.movies.update_movie"), class: "btn btn-primary mb-3",type: "submit" %>
+    <% else %>
+      <%= form.button I18n.t("view.movies.add_movie"), class: "btn btn-primary mb-3",type: "submit" %>
+  <% end %>
+<% end %>

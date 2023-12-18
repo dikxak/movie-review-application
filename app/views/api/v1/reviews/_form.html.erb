@@ -1,0 +1,11 @@
+<%= form_with model: review, url: url, method: method, data: { turbo: false } do |form| %>
+  <%= render "shared/form_errors", form: form %>
+
+  <div class="d-flex flex-column gap-3 w-50">
+    <%= form.text_area :comment, class: "form-control", placeholder: "Add your review", rows: 6 %>
+
+    <%= form.text_field :rating, type: "number", step: 0.5, class: "form-control", placeholder: "Add rating" %>
+
+    <%= form.button I18n.t("view.reviews.add_a_review"), class: "btn btn-primary align-self-start", type: "submit" %>
+  <div>
+<% end %>

@@ -1,0 +1,440 @@
+---
+openapi: 3.0.1
+info:
+  title: API V1
+  version: v1
+paths:
+  "/api/v1/movies":
+    get:
+      summary: Retrieves All Movies
+      tags:
+      - Movies
+      responses:
+        '200':
+          description: List of movies
+          content:
+            application/json:
+              examples:
+                all_movies:
+                  value:
+                  - id: 32
+                    title: The Prestige
+                    genres: Thriller, Sci-fi
+                    director: Christopher Nolan
+                    description: Two friends and fellow magicians become bitter enemies
+                      after a sudden tragedy. As they devote themselves to this rivalry,
+                      they make sacrifices that bring them fame but, with terrible
+                      consequences.
+                    duration: 130
+                    release_date: '2006-10-20'
+                    cover_image_url: https://res.cloudinary.com/dyrohwmry/image/upload/49pbiiw2z85zpyivpodadmvcaojw.jpg
+                    poster_image_url: https://res.cloudinary.com/dyrohwmry/image/upload/mcnwzybp43s7z50urxu73abunnvd.jpeg
+                    aggregate_rating: 7
+                    reviews:
+                    - comment: Best movie.
+                      rating: 7.0
+                      created_at: '2023-12-08T07:28:15.986Z'
+                  - id: 39
+                    title: Title 10
+                    genres: Genres
+                    director: Director
+                    description: Desc
+                    duration: 121
+                    release_date: '2012-10-11'
+                    cover_image_url: https://res.cloudinary.com/dyrohwmry/image/upload/n7r3w1y8dygvdo51pdwmmmbbans2.jpg
+                    poster_image_url: https://res.cloudinary.com/dyrohwmry/image/upload/icpehqojztizkuswyfwiyde7pfe1.jpg
+                    aggregate_rating: 6.5
+                    reviews:
+                    - comment: Average movie.
+                      rating: 6.5
+                      created_at: '2023-12-08T07:28:23.978Z'
+    post:
+      summary: Creates a movie
+      tags:
+      - Movies
+      parameters: []
+      responses:
+        '201':
+          description: Movie Created
+          content:
+            application/json:
+              examples:
+                movie_created:
+                  value:
+                    id: 7
+                    title: The Avengers
+                    genres: Action, Fantasy
+                    director: Joss Whedon
+                    description: S.H.I.E.L.D. leader Nick Fury is compelled to launch
+                      the Avengers programme when Loki poses a threat to planet Earth.
+                      But the superheroes must learn to work together if they are
+                      to stop him in time.
+                    duration: 143
+                    release_date: '2012-05-04'
+                    cover_image_url: https://res.cloudinary.com/dyrohwmry/image/upload/jhksjdsknq0np3czwouiruo2u4wz.jpg
+                    poster_image_url: https://res.cloudinary.com/dyrohwmry/image/upload/4ww2skfnhc1gvi5lfm4gkuzccsg8.jpg
+                    aggregate_rating: 7.75
+                    reviews: []
+        '422':
+          description: Unprocessable Entity
+          content:
+            application/json:
+              examples:
+                unprocessable_entity:
+                  value:
+                    errors:
+                      status: 422
+                      message: Invalid operation
+        '401':
+          description: Unauthorized
+          content:
+            application/json:
+              examples:
+                user_unauthorized:
+                  value:
+                    error: You need to sign in or sign up before continuing.
+      requestBody:
+        content:
+          multipart/form-data:
+            schema:
+              type: object
+              properties:
+                title:
+                  type: string
+                genres:
+                  type: string
+                director:
+                  type: string
+                description:
+                  type: string
+                duration:
+                  type: integer
+                release_date:
+                  type: string
+                cover_image:
+                  type: string
+                  format: binary
+                poster_image:
+                  type: string
+                  format: binary
+              required:
+              - title
+              - genres
+              - director
+              - description
+              - duration
+              - release_date
+  "/api/v1/movies/{id}":
+    get:
+      summary: Retrieves a movie
+      tags:
+      - Movies
+      parameters:
+      - name: id
+        in: path
+        required: true
+        schema:
+          type: integer
+      responses:
+        '200':
+          description: Movie Details
+          content:
+            application/json:
+              examples:
+                movie_found:
+                  value:
+                    id: 1
+                    title: Shutter Island
+                    genres: Thriller, Mystery
+                    director: Martin Scorsese
+                    description: Teddy Daniels and Chuck Aule, two US marshals, are
+                      sent to an asylum on a remote island in order to investigate
+                      the disappearance of a patient, where Teddy uncovers a shocking
+                      truth about the place.
+                    duration: 130
+                    release_date: '2010-02-19'
+                    cover_image_url: https://res.cloudinary.com/dyrohwmry/image/upload/elwm3gqnov748g9gyxho7y0e4kos.jpg
+                    poster_image_url: https://res.cloudinary.com/dyrohwmry/image/upload/6ln081saovxbvb27ayfx3p8hk57b.jpeg
+                    aggregate_rating: 8.78
+        '401':
+          description: Unauthorized
+          content:
+            application/json:
+              examples:
+                user_unauthorized:
+                  value:
+                    status:
+                      code: 401
+                      message: User unauthorized!
+        '404':
+          description: Movie not found
+          content:
+            application/json:
+              examples:
+                movie_not_found:
+                  value:
+                    status:
+                      code: 404
+                      message: Movie not found!
+    patch:
+      summary: Updates a movie
+      tags:
+      - Movies
+      parameters:
+      - name: id
+        in: path
+        required: true
+        schema:
+          type: integer
+      responses:
+        '200':
+          description: Movie Updated
+          content:
+            application/json:
+              examples:
+                movie_updated:
+                  value:
+                    id: 32
+                    title: The Prestige
+                    genres: Thriller, Sci-fi
+                    director: Christopher Nolan
+                    description: Two friends and fellow magicians become bitter enemies
+                      after a sudden tragedy. As they devote themselves to this rivalry,
+                      they make sacrifices that bring them fame but, with terrible
+                      consequences.
+                    duration: 130
+                    release_date: '2006-10-20'
+                    cover_image_url: https://res.cloudinary.com/dyrohwmry/image/upload/49pbiiw2z85zpyivpodadmvcaojw.jpg
+                    poster_image_url: https://res.cloudinary.com/dyrohwmry/image/upload/mcnwzybp43s7z50urxu73abunnvd.jpeg
+                    aggregate_rating: 0
+                    reviews:
+                    - comment: Best crime movie ever made.
+                      rating: 10.0
+                      created_at: '2023-12-07T07:26:32.563Z'
+                    - comment: Best movie.
+                      rating: 7.0
+                      created_at: '2023-12-08T07:28:15.986Z'
+        '422':
+          description: Unprocessable Entity
+          content:
+            application/json:
+              examples:
+                unprocessable_entity:
+                  value:
+                    errors:
+                      status: 422
+                      message: Invalid operation
+        '401':
+          description: Unauthorized
+          content:
+            application/json:
+              examples:
+                user_unauthorized:
+                  value:
+                    error: You need to sign in or sign up before continuing.
+      requestBody:
+        content:
+          multipart/form-data:
+            schema:
+              type: object
+              properties:
+                title:
+                  type: string
+                genres:
+                  type: string
+                director:
+                  type: string
+                description:
+                  type: string
+                duration:
+                  type: integer
+                release_date:
+                  type: string
+                cover_image:
+                  type: string
+                  format: binary
+                poster_image:
+                  type: string
+                  format: binary
+              required:
+              - title
+              - genres
+              - director
+              - description
+              - duration
+              - release_date
+  "/api/v1/movies/{movie_id}/reviews":
+    parameters:
+    - name: movie_id
+      in: path
+      required: true
+      schema:
+        type: integer
+    post:
+      summary: create review
+      tags:
+      - Reviews
+      parameters: []
+      responses:
+        '201':
+          description: Review Added
+          content:
+            application/json:
+              examples:
+                review_added:
+                  value:
+                    comment: Great movie!
+                    rating: 7.5
+                    created_at: '2023-12-08T07:28:23.978Z'
+        '422':
+          description: Unprocessable Entity
+          content:
+            application/json:
+              examples:
+                unprocessable_entity:
+                  value:
+                    rating:
+                    - must be between 0 and 10
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                comment:
+                  type: string
+                rating:
+                  type: number
+  "/api/v1/users":
+    post:
+      summary: Sign Up User
+      tags:
+      - Sign Up
+      parameters: []
+      responses:
+        '201':
+          description: User created
+          content:
+            application/json:
+              examples:
+                user_sign_up:
+                  value:
+                    id: 22
+                    first_name: Michael
+                    last_name: Clark
+                    role: audience
+                    email: michael.clrk@gmail.com
+        '422':
+          description: Unprocessable Entity
+          content:
+            application/json:
+              examples:
+                unprocessable_entity:
+                  value:
+                    errors:
+                      email:
+                      - is invalid
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                user:
+                  type: object
+                  properties:
+                    first_name:
+                      type: string
+                    last_name:
+                      type: string
+                    email:
+                      type: string
+                    password:
+                      type: string
+                    password_confirmation:
+                      type: sting
+  "/api/v1/users/sign_in":
+    post:
+      summary: Login User
+      tags:
+      - Login
+      parameters: []
+      responses:
+        '201':
+          description: User logged in
+          content:
+            application/json:
+              examples:
+                audience_login:
+                  value:
+                    id: 2
+                    first_name: John
+                    last_name: Doe
+                    role: audience
+                    reviews:
+                    - comment: Great movie!
+                      rating: 8.0
+                      created_at: '2023-12-11T11:18:41.040Z'
+                    - comment: Great superhero movie ever made!
+                      rating: 8.5
+                      created_at: '2023-12-12T05:38:15.907Z'
+                admin_login:
+                  value:
+                    id: 2
+                    first_name: Jack
+                    last_name: Smith
+                    role: admin
+                    movies:
+                    - id: 33
+                      title: Shutter Island
+                      genres: Thriller, Mystery
+                      director: Martin Scorsese
+                      description: Teddy Daniels and Chuck Aule, two US marshals,
+                        are sent to an asylum on a remote island in order to investigate
+                        the disappearance of a patient, where Teddy uncovers a shocking
+                        truth about the place.
+                      duration: 130
+                      release_date: '2010-02-19'
+                      cover_image_url: https://res.cloudinary.com/dyrohwmry/image/upload/elwm3gqnov748g9gyxho7y0e4kos.jpg
+                      poster_image_url: https://res.cloudinary.com/dyrohwmry/image/upload/6ln081saovxbvb27ayfx3p8hk57b.jpeg
+                      aggregate_rating: 0
+                    - id: 29
+                      title: The Avengers
+                      genres: Action, Fantasy
+                      director: Joss Whedon
+                      description: S.H.I.E.L.D. leader Nick Fury is compelled to launch
+                        the Avengers programme when Loki poses a threat to planet
+                        Earth. But the superheroes must learn to work together if
+                        they are to stop him in time.
+                      duration: 143
+                      release_date: '2012-05-04'
+                      cover_image_url: https://res.cloudinary.com/dyrohwmry/image/upload/jhksjdsknq0np3czwouiruo2u4wz.jpg
+                      poster_image_url: https://res.cloudinary.com/dyrohwmry/image/upload/4ww2skfnhc1gvi5lfm4gkuzccsg8.jpg
+                      aggregate_rating: 7.5
+        '422':
+          description: Unprocessable Entity
+          content:
+            application/json:
+              examples:
+                unprocessable_entity:
+                  value:
+                    rating:
+                    - must be between 0 and 10
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                user:
+                  type: object
+                  properties:
+                    email:
+                      type: string
+                    password:
+                      type: string
+servers:
+- url: http://{defaultHost}
+  variables:
+    defaultHost:
+      default: 127.0.0.1:3000

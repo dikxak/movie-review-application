@@ -1,0 +1,111 @@
+en:
+  common:
+    sign_up: "Sign up"
+    login: "Log in"
+    email: "Email"
+    password: "Password"
+    delete: "Delete"
+    close: "Close"
+  flash:
+    access_denied: "Access denied. You must be an admin to view this page."
+    movie:
+      success:
+        add: "The movie was added successfully!"
+        update: "%{title} was updated successfully!"
+        delete: "%{title} was deleted successfully!"
+      fail:
+        add: "There was problem while adding the movie!"
+        update: "Couldn't update %{title}!"
+        delete: "Couldn't delete %{title}!"
+    review:
+      success:
+        add: "Review added successfully!"
+      fail:
+        add: "There was problem while adding the review!"
+  json:
+    error:
+      user_not_authorized: "You are not authorized to perform this action."
+  navbar:
+    movie_review_app: "Movie Review App"
+    movies: "Movies"
+    logout: "Logout"
+  view:
+    index:
+      movie_reviewer: "Movie Reviewer"
+    movies:
+      all_movies: "All Movies"
+      release_date: "Release date"
+      title: "Title"
+      genres: "Genres"
+      duration: "Duration"
+      director: "Director"
+      description: "Description"
+      add_a_new_movie: "Add a new movie"
+      export_movies_as_csv: "Export movies as CSV"
+      add_movie: "Add Movie"
+      update_movie: "Update movie"
+      edit_movie: "Edit Movie"
+      all_reviews: "All Reviews"
+      no_any_reviews: "No any reviews."
+      rating: "Rating:"
+      not_rated: "Not rated"
+      no_any_movies_found: "No any movies found!"
+      logged_in_to_add_reviews: "You must be logged in to view and add reviews to the movie!"
+      warnings:
+        delete_movie: "Are you sure want to delete"
+        delete_action_description: "This action cannot be undone, so please make sure you want to proceed. Once the movie is deleted, all associated data will be permanently removed from the system."
+    reviews:
+      add_a_review: "Add a review"
+      add_review_for_movie: "Add Review for %{title}"
+  registrations:
+    first_name: "First name"
+    last_name: "Last name"
+    confirmation_password: "Confirmation password"
+  sessions:
+    remember_me: "Remember me"
+  activerecord:
+    errors:
+      models:
+        user:
+          attributes:
+            first_name:
+              blank: "can't be blank"
+            last_name:
+              blank: "can't be blank"
+            role:
+              blank: "can't be blank"
+            email:
+              blank: "can't be blank"
+              taken: "had already been taken"
+              invalid: "is invalid"
+            password:
+              blank: "can't be blank"
+              complexity: "length should be minimum 8 characters and include: 1 uppercase, 1 lowercase, 1 digit, and 1 special character"
+            password_confirmation:
+              confirmation: "doesn't match Password"
+        movie:
+          attributes:
+            title:
+              blank: "can't be blank"
+            genres:
+              blank: "can't be blank"
+            director:
+              blank: "can't be blank"
+            description:
+              blank: "can't be blank"
+            duration:
+              blank: "can't be blank"
+            release_date:
+              blank: "can't be blank"
+              format: "should be in the format YYYY-MM-DD"
+  devise:
+    sessions:
+      invalid: "Invalid email or password."
+  pundit:
+    default: "You cannot perform this action."
+    movie_policy:
+      create?: "You must be an admin to add a movie!"
+      update?: "You must be an admin to update this movie!"
+      destroy?: "You must be an admin to delete this movie!"
+    review_policy:
+      create?: "Only audience is able to add reviews to the movie!"

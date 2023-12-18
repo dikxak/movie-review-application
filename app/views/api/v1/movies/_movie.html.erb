@@ -1,0 +1,21 @@
+<div class="row row-cols-4 gy-4">
+  <% if movies.length == 0 %>
+    <p class="fs-3"><%= I18n.t("view.movies.no_any_movies_found") %></p>
+  <% else %>
+    <% movies.each do |movie| %>
+      <div class="col">
+        <%= link_to api_v1_movie_path(movie.id), class: "text-decoration-none d-block h-100" do %>
+          <div class="card py-2 px-3 d-flex flex-column gap-2 h-100">
+            <% if movie.poster_image.attached? %>
+              <%= image_tag movie.poster_image.url, class: "mb-4 movie-cover img-fluid" %>
+            <% end %>
+            <span class="movie-title mb-1"><%= movie.title %></span>
+            <span><%= I18n.t("view.movies.release_date") %>: <%= movie.release_date.strftime("%d %b, %Y") %></span>
+            <span><%= I18n.t("view.movies.genres") %>: <%= movie.genres %></span>
+            <span><%= I18n.t("view.movies.duration") %>: <%= "#{movie.duration / 60}h #{movie.duration % 60}m" %>
+          </div>
+        <% end %>
+      </div>
+    <% end %>
+  <% end %>
+</div>

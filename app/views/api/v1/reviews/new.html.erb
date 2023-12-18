@@ -1,0 +1,3 @@
+<h1 class="mb-4"><%= I18n.t('view.reviews.add_review_for_movie', title: @movie.title) %></h1>
+
+<%= render partial: "form", locals: { url: api_v1_movie_reviews_path, method: :post, review: @review } %>

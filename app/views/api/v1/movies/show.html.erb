@@ -1,0 +1,109 @@
+<div class="movie-container mb-5 card p-4">
+  <% if @movie.cover_image.attached? %>
+    <%= image_tag @movie.cover_image.url, class: "mb-4 img-fluid" %>
+  <% end %>
+
+  <div class="d-flex align-items-center justify-content-between mb-3">
+    <h2 class="m-0"><%= @movie.title %></h2>
+    <% if current_user && current_user&.admin? %>
+      <div class="d-flex align-items-center gap-3">
+        <%= link_to edit_api_v1_movie_path(@movie.id), class: "text-decoration-none edit-icon", title: "Edit movie" do  %>
+          <i class="fa-regular fa-pen-to-square"></i>
+        <% end %>
+
+       <button type="button" class="btn m-0 p-0 delete-icon" data-bs-toggle="modal" data-bs-target="#exampleModal">
+        <i class="fa-solid fa-trash" style="color: #e01010;"></i>
+       </button>
+      </div>
+    <% end %>
+  </div>
+
+  <div class="d-flex align-items-center gap-2 avg-rating mb-5">
+    <% if @movie.aggregate_rating > 0  %>
+      <%= I18n.t("view.movies.rating") %> <%= generate_stars(@movie.aggregate_rating) %> (<%= @movie.aggregate_rating %>)
+    <% else %>
+      <i class="fa-solid fa-star" style="color: #e8cb26;"></i>
+      <%= I18n.t("view.movies.not_rated") %>  
+    <% end %>
+  </div>
+
+  <div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h2 class="modal-title fs-5" id="exampleModalLabel"><%= I18n.t("view.movies.warnings.delete_movie") %> <strong><%= @movie.title %></strong>?</h2>
+        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+      </div>
+      <div class="modal-body">
+        <p><%= I18n.t("view.movies.warnings.delete_action_description") %></p>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal"><%= I18n.t("common.close") %></button>
+
+        <%= link_to I18n.t("common.delete"), api_v1_movie_path(@movie), data: { turbo_method: :delete }, class: "btn btn-danger" %>
+      </div>
+    </div>
+  </div>
+  </div>
+
+ <div class="d-flex flex-column gap-4 mb-4">
+    <div class="d-flex align-items-center gap-5">
+      <div>
+        <span><%= I18n.t("view.movies.genres") %>: </span>
+        <span><%= @movie.genres %></span>
+      </div>
+      <div>
+        <span><%= I18n.t("view.movies.release_date") %>: </span>
+        <span><%= @movie.release_date.strftime("%d %b, %Y") %></span>
+      </div>
+    </div>
+
+    <div class="d-flex align-items-center gap-5">
+     <div>
+        <span><%= I18n.t("view.movies.director") %>: </span>
+        <span><%= @movie.director %></span>
+     </div>
+      <div>
+        <span><%= I18n.t("view.movies.duration") %>: </span>
+        <span><%= "#{@movie.duration / 60}h #{@movie.duration % 60}m" %></span>
+      </div>
+    </div>
+ </div>
+
+  <p class="movie-description m-0"><%= @movie.description %></p>
+</div>
+
+<% if current_user.nil? %>
+  <p class="fs-3"><%= I18n.t("view.movies.logged_in_to_add_reviews") %></p>
+<% else %>
+  <h3 class="mb-4"><%= I18n.t("view.movies.all_reviews") %></h3>
+
+  <div class="row row-cols-4 gy-4 mb-5">
+    <% if @movie.reviews.size == 0 %>
+      <p class="lead"><%= I18n.t("view.movies.no_any_reviews") %></p>
+    <% else %>
+      <% @movie.reviews.each do |review| %>
+        <div class="col">
+          <div class="card px-3 py-2 d-flex flex-column gap-2 h-100">
+            <div class="d-flex align-items-center gap-2">
+              <span>
+                <%= review.rating %>
+              </span>
+              <div class="d-flex align-items-center gap-1">
+                <%= generate_stars(review.rating) %>
+              </div>
+            </div>
+
+            <p class="m-0">
+              <%= review.comment %>
+            </p>
+          </div>
+        </div>
+      <% end %>
+   <% end %>
+  </div>
+
+  <div class="mb-5">
+    <%= link_to I18n.t('view.reviews.add_a_review'), new_api_v1_movie_review_path(@movie), class: 'btn btn-secondary align-self-start' %>
+  <div>
+<% end %>

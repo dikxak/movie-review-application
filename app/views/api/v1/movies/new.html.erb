@@ -1,0 +1,3 @@
+<h1><%= I18n.t("view.movies.add_a_new_movie") %></h1>
+
+<%= render partial: "form", locals: { url: api_v1_movies_path, method: :post, movie: @movie, form_action: "add" } %>

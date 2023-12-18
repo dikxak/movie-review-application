@@ -1,0 +1,3 @@
+<h1><%= I18n.t("view.movies.edit_movie") %></h1>
+
+<%= render partial: "form", locals: {url: api_v1_movie_path, method: :patch, movie: @movie, form_action: "edit"} %>

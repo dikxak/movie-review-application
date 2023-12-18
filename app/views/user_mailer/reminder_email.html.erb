@@ -1,0 +1,21 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Reminder Email</title>
+</head>
+<body>
+  <h1>Reminder Email</h1>
+  <p>
+    Hi <%= @user.email %>,
+  </p>
+  <p>
+    Just a friendly reminder to confirm your account. Please click the link below:
+  </p>
+  <p>
+    <%= link_to 'Confirm my account', confirmation_url(@user, confirmation_token: @token) %>
+  </p>
+  <p>
+    If you didn't request this, please ignore this email.
+  </p>
+</body>
+</html>
